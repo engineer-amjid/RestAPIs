@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+import blogs.middleware
+from blogs.middleware import EnsureTokenPrefixMiddleware
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -36,13 +39,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admin',
 ]
 
 EXTERNAL_APPS = [
+    'rest_framework',
+    'rest_framework.authtoken',
+    'drf_yasg',
     'blogs',
 ]
 INSTALLED_APPS += EXTERNAL_APPS
-
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -51,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'blogs.middleware.EnsureTokenPrefixMiddleware'
 ]
 
 ROOT_URLCONF = 'RestAPIs.urls'
@@ -126,3 +138,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Token': {
+            'type': 'apiKey',
+            'name': 'Authorization',  # Header field name
+            'in': 'header'           # Specifies that the token is in the header
+        }
+    },
+    'USE_SESSION_AUTH': False,        # Disable session-based authentication for Swagger
+    'DEFAULT_API_URL': 'http://127.0.0.1:8000/api/v1/',  # Default API URL for testing
+}
+
+
