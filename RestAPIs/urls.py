@@ -2,8 +2,8 @@ from django.urls import path, include
 from django.contrib import admin
 from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
-
-from blogs.views import BlogPostViewSet, RegisterUserViewSet, LoginUserViewSet
+from blogs.custom_views.blog_views import BlogPostViewSet
+from blogs.custom_views.user_views import RegisterUserViewSet, LoginUserViewSet
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
