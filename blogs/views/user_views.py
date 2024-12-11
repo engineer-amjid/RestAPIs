@@ -4,10 +4,10 @@ from rest_framework import generics, status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.exceptions import ValidationError, AuthenticationFailed
-from ..models import Profile
+from ..models.profile_model import Profile
 from ..serializers.user_serializer import UserSerializer
 from ..serializers.profile_serializer import ProfileSerializer
-from blogs.shared.utils import custom_response  # Import the utility function
+from blogs.utils.utils import custom_response  # Import the utility function
 
 
 class RegisterUserViewSet(generics.CreateAPIView):

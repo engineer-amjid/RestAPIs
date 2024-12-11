@@ -1,8 +1,8 @@
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
-from ..models import BlogPost
+from ..models.blog_model import BlogPost
 from ..serializers.blog_post_serializer import BlogPostSerializer
-from blogs.shared.utils import custom_response  # Import the utility function
+from blogs.utils.utils import custom_response  # Import the utility function
 
 
 class BlogPostViewSet(viewsets.ModelViewSet):
